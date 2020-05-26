@@ -1,11 +1,12 @@
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(test)
+cmake_minimum_required(VERSION 3.17)
+project(libtorch-example 
+  VERSION 1.0 
+  DESCRIPTION "Simple libtorch example"
+  LANGUAGES CXX)
 
-find_package(Torch REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+find_package(Torch)
 
-add_executable(test test.cc)
-target_link_libraries(test "${TORCH_LIBRARIES}")
-message("${TORCH_LIBRARIES}")
-set_property(TARGET test PROPERTY CXX_STANDARD 14)
-
+add_executable(test)
+target_sources(test PRIVATE "test.cc")
+target_link_libraries(test PRIVATE ${TORCH_LIBRARIES})
+target_compile_features(test PRIVATE cxx_std_14)
